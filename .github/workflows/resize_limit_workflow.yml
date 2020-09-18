@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@master
 
       - name: Compress Images
-        uses: petems/img-resizer-inplace@cf8224bcd788bb4255f26b22a0781e7fd79e541c
+        uses: petems/img-resizer-inplace@965e3bde3779ca4af2fb78b5e5334cb399f5b019
         with:
           target: # default is images
           # New resolution for images
