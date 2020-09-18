@@ -24,7 +24,6 @@ jobs:
           dimensions: # default is 70%
           widthLimit: 1024 
           heightLimit: 768
-
       - name: Add & Commit files
         run: |
           git checkout $GITHUB_HEAD_REF
