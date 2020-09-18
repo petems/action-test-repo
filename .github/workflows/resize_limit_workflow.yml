@@ -24,11 +24,9 @@ jobs:
           dimensions: # default is 70%
           widthLimit: 1024 
           heightLimit: 768
-      - name: Add & Commit files
-        run: |
-          git checkout $GITHUB_HEAD_REF
-          git config --local user.email "github-action[bot]@github.com"
-          git config --local user.name "GitHub Action Bot"
-          git add .
-          git commit -m "Resizing imges with img-resizer-inplace-limit" -a
-          git push -u origin $GITHUB_HEAD_REF -f
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v4
+        with:
+          author_name: GitHub Action Bot
+          author_email: github-action[bot]@github.com
+          message: "Resizing imges with img-resizer-inplace-limit"
