@@ -22,7 +22,7 @@ jobs:
         with:
           target: # default is images
           # New resolution for images
-          dimensions: # default is 70%
+          dimensions: 70% # default is 70%
           widthLimit: 1024 
           heightLimit: 768
       - uses: mshick/add-pr-comment@v1
