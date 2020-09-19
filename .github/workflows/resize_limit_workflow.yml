@@ -18,13 +18,12 @@ jobs:
 
       - name: Compress Images
         id: resize-images
-        uses: petems/img-resizer-inplace@ec80eea91693a6413315f51c5c3160cfc733dc8e
+        uses: petems/img-resizer-inplace@b53836f23a314081fa3aa2429b2c0fb9d24922e2
         with:
-          target: images/
-          # New resolution for images
-          dimensions: 70% # default is 70%
-          widthLimit: 1024 
-          heightLimit: 768
+          target: images/ # directory to look for images in
+          dimensions: 70% # parameter to change size 
+          widthLimit: 1024 # max width to check
+          heightLimit: 768 # max height to check
       - uses: mshick/add-pr-comment@v1
         with:
           message: |
@@ -32,4 +31,4 @@ jobs:
             ${{steps.resize-images.outputs.images_changed}}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           repo-token-user-login: 'github-actions[bot]' # The user.login for temporary GitHub tokens
-          allow-repeats: false # This is the default
+          allow-repeats: true 
