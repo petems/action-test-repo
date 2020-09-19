@@ -18,7 +18,7 @@ jobs:
 
       - name: Compress Images
         id: resize-images
-        uses: petems/img-resizer-inplace@a8c7fda9d4e7df914574250943317cca635ad7c5
+        uses: petems/img-resizer-inplace@740f0237a31587fb44f48eca8cdbf5acc1823fc0
         with:
           target: # default is images
           # New resolution for images
