@@ -17,6 +17,7 @@ jobs:
         uses: actions/checkout@master
 
       - name: Compress Images
+        id: resize-images
         uses: petems/img-resizer-inplace@a8c7fda9d4e7df914574250943317cca635ad7c5
         with:
           target: # default is images
@@ -24,9 +25,11 @@ jobs:
           dimensions: # default is 70%
           widthLimit: 1024 
           heightLimit: 768
-      - name: Commit changes
-        uses: EndBug/add-and-commit@v4
+      - uses: mshick/add-pr-comment@v1
         with:
-          author_name: GitHub Action Bot
-          author_email: github-action[bot]@github.com
-          message: "Resizing imges with img-resizer-inplace-limit"
+          message: |
+            **Hello, I resized images for you!**:
+            ${{steps.resize-images.outputs.images_changed}}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token-user-login: 'github-actions[bot]' # The user.login for temporary GitHub tokens
+          allow-repeats: false # This is the default
