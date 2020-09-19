@@ -18,7 +18,7 @@ jobs:
 
       - name: Compress Images
         id: resize-images
-        uses: petems/img-resizer-inplace@f4adad7a5036ca2d22a04982eabf12ec5b7886f7
+        uses: petems/img-resizer-inplace@30ac8f54425a78ed4a86281faefc9651362e3e98
         with:
           target: images/ # directory to look for images in
           dimensions: 70% # parameter to change size 
