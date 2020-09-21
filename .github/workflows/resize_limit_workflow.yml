@@ -14,7 +14,6 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master
-
       - name: Compress Images
         id: resize-images
         uses: petems/img-resizer-inplace@master
@@ -25,6 +24,8 @@ jobs:
           heightLimit: 768 # max height to check
       - name: Commit changes
         uses: EndBug/add-and-commit@v4
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           add: 'images/'
           author_name: "github-actions[bot]"
@@ -34,8 +35,6 @@ jobs:
             ```
             ${{steps.resize-images.outputs.images_changed}}
             ```
-            env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: mshick/add-pr-comment@v1
         with:
           message: |
