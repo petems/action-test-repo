@@ -1,12 +1,11 @@
 name: Resize images
 
-on: 
+on:
   pull_request:
     paths:
-      - '**.jpg'
-      - '**.jpeg'
-      - '**.png'
-      - '**.webp'
+      - 'images/**.jpg'
+      - 'images/**.jpeg'
+      - 'images/**.png'
 
 jobs:
   build:
@@ -17,19 +16,31 @@ jobs:
         uses: actions/checkout@master
 
       - name: Compress Images
-        uses: petems/img-resizer-inplace@cf8224bcd788bb4255f26b22a0781e7fd79e541c
+        id: resize-images
+        uses: petems/img-resizer-inplace@master
         with:
-          target: # default is images
-          # New resolution for images
-          dimensions: # default is 70%
-          widthLimit: 1024 
-          heightLimit: 768
-
-      - name: Add & Commit files
-        run: |
-          git checkout $GITHUB_HEAD_REF
-          git config --local user.email "github-action[bot]@github.com"
-          git config --local user.name "GitHub Action Bot"
-          git add .
-          git commit -m "Resizing imges with img-resizer-inplace-limit" -a
-          git push -u origin $GITHUB_HEAD_REF -f
+          target: images/ # directory to look for images in
+          dimensions: 90% # parameter to change size
+          widthLimit: 1024 # max width to check
+          heightLimit: 768 # max height to check
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v4
+        with:
+          add: 'images/'
+          author_name: "github-actions[bot]"
+          author_email: "github-actions@users.noreply.github.com"
+          message: |
+            Images Reszied by Github action\n
+            ```
+            ${{steps.resize-images.outputs.images_changed}}
+            ```
+            env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: mshick/add-pr-comment@v1
+        with:
+          message: |
+            **Hello, I resized images for you!**:
+            ${{steps.resize-images.outputs.images_changed}}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token-user-login: 'github-actions[bot]' # The user.login for temporary GitHub tokens
+          allow-repeats: true
