@@ -25,7 +25,7 @@ jobs:
       - name: Commit changes
         uses: EndBug/add-and-commit@v4
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           add: 'images/'
           author_name: "github-actions[bot]"
@@ -35,11 +35,16 @@ jobs:
             ```
             ${{steps.resize-images.outputs.images_changed}}
             ```
+      - name: Convert to Markdown Table
+        uses: petems/csv-to-md-table-action@master
+        id: csv-table-output
+        with:
+          csvinput: ${{steps.resize-images.outputs.csv_images_changed}}
       - uses: mshick/add-pr-comment@v1
         with:
           message: |
             **Hello, I resized images for you!**:
-            ${{steps.resize-images.outputs.images_changed}}
+            ${{steps.csv-table-output.outputs.markdown-table}}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           repo-token-user-login: 'github-actions[bot]' # The user.login for temporary GitHub tokens
           allow-repeats: true
